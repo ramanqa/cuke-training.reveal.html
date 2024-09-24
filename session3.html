@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Cucumber - Session 3</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/dracula.css">
+
+		<link rel="stylesheet" href="plugin/highlight/styles/hybrid.css">
+    <style>
+.reveal code {
+  color: silver;
+}
+    </style>
+  </head>
+	<body>
+    <img class="fragment current-visible" src="assets/qtlogo-whitebg.png" style="position:absolute; left:10px; bottom:20px; width: 100px; opacity: 0.5">
+		<div class="reveal">
+			<div class="slides">
+				<section>
+          <h2>Cucumber Training - Session 3</h2>
+          <h4>Best Practices and Anti-Patterns</h4>
+        </section>
+
+        <section>
+          <section>
+            <h3>Goal-Oriented Vocabulary?</h3>
+            <br />
+          </section>
+          <section data-auto-animate>
+            <h4>LMS Login</h4>
+            <div style='text-align: left;'><em>As a Teachers of class X<br />I need access to Class LMS<br /> To be able to view and update Class details</em></div>
+            <img src='media/lms-login-form.png' />
+          </section>
+          <section data-auto-animate>
+            <h3>LMS Login</h3>
+            <pre style='font-size: 0.5em;' data-id="code-animation"><code class='gherkin'>Example: Authorized class teacher can login and access Class Admin on LMS
+  Given User is a Teacher
+  And User's credentials are:
+    |username                 |password   |
+    |john.doe.teacher@ssec.edu|PASSword$01|
+  And LMS is launched
+  And Login page is displayed
+  When User selects Account Type as 'Teacher'
+  And User enters username as 'john.doe.teacher@ssec.edu'
+  And User enters password as 'PASSword$01'
+  And User submits login form
+  Then User is logged in
+  And Teacher panel is returned
+  And A list if Teacher's classes are returned
+  And User can select Class 'Maths-201-Major' to view details</code></pre>
+          </section>
+          <section data-auto-animate>
+            <h3>LMS Login</h3>
+            <pre style='font-size: 0.5em;' data-id="code-animation"><code class='gherkin'>Example: Authorized class teacher can login and access Class Admin on LMS
+  Given User is a Teacher
+  And User has access to class 'Class X'
+  And LMS is launched
+  When User logs in
+  Then Teacher panel is returned
+  And A list of Teacher's classes are displayed
+  And User can view details of class 'Class X'</code></pre>
+          </section>
+
+          <section data-auto-animate>
+            <h3>OMDb API</h3>
+            <div style='text-align: left;'><em>As an Application Developer<br />I need a way to retrieve a Movie by Title<br />To get metadata about the Movie</em></div>
+            <img src='media/omdb-title.png' />
+          </section>
+          <section data-auto-animate>
+            <h3>OMDb API</h3>
+            <pre style='font-size: 0.5em;' data-id="code-animation"><code class='gherkin'>Example: Developers can retrieve Movie metadata by Movie Title
+  Given User has a valid OMDb API Key
+  When an HTTP GET request is raised with query parameters:
+    |apikey|title           |
+    |ABCxyz|A Clockwork Orange|
+  Then an HTTP response is recieved
+  And HTTP status code is 200
+  And response body has JSON Object with Movie metadata
+  And Movie metadata JSON body includes following data:
+    |Year|Director       |Genre        |Rated|
+    |1971|Stanley Kubrick|Crime, Sci-Fi|R    |</code></pre>
+          </section>
+          <section data-auto-animate>
+            <h3>OMDb API</h3>
+            <pre style='font-size: 0.5em;' data-id="code-animation"><code class='gherkin'>Example: Developers can retrieve Movie metadata by Movie Title
+  Given OMDb API Client is instantiated with valid auth key
+  When a search movie by title method is invoked with title
+    'A Clockwork Orange'
+  Then successful method response is recieved
+  And response has Movie metadata with following data:
+    |Year|Director       |Genre        |Rated|
+    |1971|Stanley Kubrick|Crime, Sci-Fi|R    |</code></pre>
+          </section>
+          <section data-auto-animate>
+            <h3>OMDb API</h3>
+            <pre style='font-size: 0.5em;' data-id="code-animation"><code class='gherkin'>Example: Developers can retrieve Movie metadata by Movie Title
+  Given User is authorized to access OMDb API
+  When a request is raised to access movie metadata for movie
+    title 'A Clockwork Orange'
+  Then successful response is recieved
+  And response has Movie metadata with following data:
+    |Year|Director       |Genre        |Rated|
+    |1971|Stanley Kubrick|Crime, Sci-Fi|R    |</code></pre>
+          </section>
+
+          <section>
+            <h3>Goal-Oriented Vocabulary and DSL</h3>
+            <ul>
+              <li>Blur implementation, technical details, multiple domains </li>
+              <li>Focus on intended audience, intent, task, activity, event and goal</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Discovery</h3>
+            <ul>
+              <li>
+                3 Amigos - PO, Dev, Test
+              </li>
+              <br />
+              <li>Collaborate, explore, introspect, learn</li>
+              <li>Agreed outcomes, behaviors, contracts and intents</li>
+            </ul>
+          </section>
+          <section data-auto-animate>
+            <h3>Formulation</h3>
+            <ul>
+              <li>focus on end-to-end user journey</li>
+              <li>declarative over imperative</li>
+              <li>singularity in behavior/rule scope</li>
+              <li>fluent. Business readable</li>
+              <li>present tense all the way</li>
+            </ul>
+          </section>
+          <section data-auto-animate>
+            <h3>Formulation</h3>
+            <div style='display: table; width: 1024px;'>
+              <div style='display: table-row;'>
+                <div style='display: table-cell; width: 300px'>
+                  <ul style='font-size: 0.5em;'>
+                    <li>focus on end-to-end user journey</li>
+                    <li>declarative over imperative</li>
+                    <li>singularity in behavior/rule scope</li>
+                    <li>fluent. Business readable</li>
+                    <li>present tense all the way</li>
+                  </ul>
+                </div>
+                <div style='display: table-cell; width: 500px; vertical-align: top;'>
+                  <pre data-id='code-animation' style='font-size: 0.4em;'><code class='gherkin' data-line-numbers='5-8'>Feature: snake and ladders game
+  Background:
+    Given an empty game board
+  
+  Example: 1st player joins an empty board has turn
+    When player 'Roman' joins the game board
+    Then total players in game are 1
+    And player 'Roman' has turn
+
+  Example: new joined player on the board has last turn
+    Given player 'Roman' joins the game board
+    When player 'Celtic' joins the game board
+    Then total players in game are 2
+    And player 'Roman' has the turn
+
+  Example: when player makes a move the turn changes to next
+    player in joining order
+  Given player 'Roman' joins the game board
+  And player 'Celtics' joins the game board
+  And game has not started
+  When player 'Roman' rolls dice to make a move
+  Then player 'Celtics' has the turn</code></pre>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section data-auto-animate>
+            <h3>Formulation</h3>
+            <div style='display: table; width: 1024px;'>
+              <div style='display: table-row;'>
+                <div style='display: table-cell; width: 300px'>
+                  <ul style='font-size: 0.5em;'>
+                    <li>focus on end-to-end user journey</li>
+                    <li>declarative over imperative</li>
+                    <li>singularity in behavior/rule scope</li>
+                    <li>fluent. Business readable</li>
+                    <li>present tense all the way</li>
+                  </ul>
+                </div>
+                <div style='display: table-cell; width: 500px; vertical-align: top;'>
+                  <pre data-id='code-animation' style='font-size: 0.4em;'><code class='gherkin' data-line-numbers='10-14'>Feature: snake and ladders game
+  Background:
+    Given an empty game board
+  
+  Example: 1st player joins an empty board has turn
+    When player 'Roman' joins the game board
+    Then total players in game are 1
+    And player 'Roman' has turn
+
+  Example: new joined player on the board has last turn
+    Given player 'Roman' joins the game board
+    When player 'Celtic' joins the game board
+    Then total players in game are 2
+    And player 'Roman' has the turn
+
+  Example: when player makes a move the turn changes to next
+    player in joining order
+  Given player 'Roman' joins the game board
+  And player 'Celtics' joins the game board
+  And game has not started
+  When player 'Roman' rolls dice to make a move
+  Then player 'Celtics' has the turn</code></pre>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section data-auto-animate>
+            <h3>Formulation</h3>
+            <div style='display: table; width: 1024px;'>
+              <div style='display: table-row;'>
+                <div style='display: table-cell; width: 300px'>
+                  <ul style='font-size: 0.5em;'>
+                    <li>focus on end-to-end user journey</li>
+                    <li>declarative over imperative</li>
+                    <li>singularity in behavior/rule scope</li>
+                    <li>fluent. Business readable</li>
+                    <li>present tense all the way</li>
+                  </ul>
+                </div>
+                <div style='display: table-cell; width: 500px; vertical-align: top;'>
+                  <pre data-id='code-animation' style='font-size: 0.4em;'><code class='gherkin' data-line-numbers='16-22'>Feature: snake and ladders game
+  Background:
+    Given an empty game board
+  
+  Example: 1st player joins an empty board has turn
+    When player 'Roman' joins the game board
+    Then total players in game are 1
+    And player 'Roman' has turn
+
+  Example: new joined player on the board has last turn
+    Given player 'Roman' joins the game board
+    When player 'Celtic' joins the game board
+    Then total players in game are 2
+    And player 'Roman' has the turn
+
+  Example: when player makes a move the turn changes to next
+    player in joining order
+  Given player 'Roman' joins the game board
+  And player 'Celtics' joins the game board
+  And game has not started
+  When player 'Roman' rolls dice to make a move
+  Then player 'Celtics' has the turn</code></pre>
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section data-auto-animate>
+            <h2>Anti-Patterns</h2>
+          </section>
+          <section data-auto-animate>
+            <h3>Anti-Patterns</h3>
+            <ul>
+              <li>Retrofitting cucumber examples does not work (story already implemented)</li>
+            </ul>
+          </section>
+          <section data-auto-animate>
+            <h3>Anti-Patterns</h3>
+            <div style='display: table; width: 1024px;'>
+              <div style='display: table-row;'>
+                <div style='display: table-cell; width: 300px'>
+                  <ul style='font-size: 0.5em;'>
+                    <li>Retrofitting cucumber examples does not work (story already implemented)</li>
+                    <li style='color: skyblue;'>Conjunction steps reduce maintainability and reusability</li>
+                  </ul>
+                </div>
+                <div style='display: table-cell; width: 500px; vertical-align: top;'>
+                  <pre data-id='code-animation' style='font-size: 0.4em;'><code class='gherkin' data-line-numbers='3,8,9'>Example: eating enough is ok
+  Given Dexter is hungry
+  When Dexter eats Cucumber and Dexter eats a baguette
+  Then Dexter is full
+
+Example: eating enough us ok
+  Given Dexter is hungry
+  When Dexter eats Cucumber
+  And Dexter eats a baguette
+  Then Dexter is full
+                  </code></pre>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section data-auto-animate>
+            <h3>Anti-Patterns</h3>
+            <div style='display: table; width: 1024px;'>
+              <div style='display: table-row;'>
+                <div style='display: table-cell; width: 300px'>
+                  <ul style='font-size: 0.5em;'>
+                    <li>Retrofitting cucumber examples does not work (story already implemented)</li>
+                    <li>Conjunction steps reduce maintainability and reusability</li>
+                    <li style='color: skyblue;'>Avoid testing through UI</li>
+                  </ul>
+                </div>
+                <div style='display: table-cell; width: 500px; vertical-align: top;'>
+                  <pre data-id='code-animation' style='font-size: 0.4em;'><code class='gherkin' data-line-numbers='4-7, 13-15'>Example: Amazon PDP buy now workflow
+  Given Amazon is open
+  And Amazon is logged in for an authorized user
+  When User enters search term '3.5 hdd 2TB' in search box
+  And User submits search
+  And User selects the 1st product from product list page
+  And User clicks on 'Buy Now' button
+  Then Buy now workflow is triggered
+  And User is asked for billing information
+
+Example: Amazon PDP buy now workflow
+  Given Amazon is logged in for an authorized user
+  When User performs product search for '3.5 hdd 2TB'
+  And User opens product display for 1st result
+  And User select to buy now
+  Then Buy now workflow is triggered
+  And User is asked for billing information
+                  </code></pre>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section data-auto-animate>
+            <h3>Anti-Patterns</h3>
+            <div style='display: table; width: 1024px;'>
+              <div style='display: table-row;'>
+                <div style='display: table-cell; width: 300px'>
+                  <ul style='font-size: 0.5em;'>
+                    <li>Retrofitting cucumber examples does not work (story already implemented)</li>
+                    <li>Conjunction steps reduce maintainability and reusability</li>
+                    <li>Avoid testing through UI</li>
+                    <li style='color: skyblue;'>Fluffy examples are bad. Reduce noise, uneeded steps</li>
+                  </ul>
+                </div>
+                <div style='display: table-cell; width: 500px; vertical-align: top;'>
+                  <pre data-id='code-animation' style='font-size: 0.4em;'><code class='gherkin' data-line-numbers='2-5, 10'>Example: Check bank balance 
+  Given I am Matt
+  And my password is password
+  When I open bank website
+  And login with username Matt and password password
+  And check my bank balance
+  Then my bank balance is $100
+
+Example: Check bank balance 
+  When I login as Matt
+  And check my bank balance
+  Then my bank balance is $100
+                  </code></pre>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section data-auto-animate>
+            <h3>Anti-Patterns</h3>
+                  <ul style='font-size: 0.7em;'>
+                    <li>Retrofitting cucumber examples does not work (story already implemented)</li>
+                    <li>Conjunction steps reduce maintainability and reusability</li>
+                    <li>Avoid testing through UI</li>
+                    <li>Fluffy examples are bad. Reduce noise, uneeded steps</li>
+                    <li style='color: skyblue;'>Non descriptive and inacurate Scenario title. Title should describe an activity/task and should detail how this is different</li>
+                  </ul>
+          </section>
+          <section data-auto-animate>
+            <h3>Anti-Patterns</h3>
+                  <ul style='font-size: 0.7em;'>
+                    <li>Retrofitting cucumber examples does not work (story already implemented)</li>
+                    <li>Conjunction steps reduce maintainability and reusability</li>
+                    <li>Avoid testing through UI</li>
+                    <li>Fluffy examples are bad. Reduce noise, uneeded steps</li>
+                    <li>Non descriptive and inacurate Scenario title. Title should describe an activity/task and should detail how this is different</li>
+                    <li style='color: skyblue;'>Too much of "i" blurs context</li>
+                  </ul>
+          </section>
+          <section data-auto-animate>
+            <h3>Anti-Patterns</h3>
+                  <ul style='font-size: 0.7em;'>
+                    <li>Retrofitting cucumber examples does not work (story already implemented)</li>
+                    <li>Conjunction steps reduce maintainability and reusability</li>
+                    <li>Avoid testing through UI</li>
+                    <li>Fluffy examples are bad. Reduce noise, uneeded steps</li>
+                    <li>Non descriptive and inacurate Scenario title. Title should describe an activity/task and should detail how this is different</li>
+                    <li>Too much of "i" blurs context</li>
+                    <li style='color: skyblue;'>When after Then is an anomaly. Examples should be independent</li>
+                  </ul>
+          </section>
+          <section data-auto-animate>
+            <h3>Anti-Patterns</h3>
+            <div><em>Strike a balance between Verbosity and Abstraction</em></div>
+            <br />
+                  <ul style='font-size: 0.5em;'>
+                    <li>Retrofitting cucumber examples does not work (story already implemented)</li>
+                    <li>Conjunction steps reduce maintainability and reusability</li>
+                    <li>Avoid testing through UI</li>
+                    <li>Fluffy examples are bad. Reduce noise, uneeded steps</li>
+                    <li>Non descriptive and inacurate Scenario title. Title should describe an activity/task and should detail how this is different</li>
+                    <li>Too much of "i" blurs context</li>
+                    <li>When after Then is an anomaly. Examples should be independent</li>
+                  </ul>
+          </section>
+        </section>
+
+        <section>
+          <h3>References</h3>
+          <br />
+          <a href='https://dannorth.net/blog/'>https://dannorth.net/</a>
+          <br />
+          <a href='https://martinfowler.com/'>https://martinfowler.com/</a>
+          <br />
+        </section>
+
+        <section>
+          <h3>Exercise</h3>
+          <div style='text-align: left;'> Create Scenarios in Cucumber for Single Player browser based Hangman<br />
+          </div>
+          <br />
+          <br />
+          <h4>Thank You</h4>
+        </section>
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>

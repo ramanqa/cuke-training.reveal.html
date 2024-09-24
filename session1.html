@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Cucumber - Session 1</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/dracula.css">
+
+		<link rel="stylesheet" href="plugin/highlight/styles/hybrid.css">
+    <style>
+.reveal code {
+  color: silver;
+}
+    </style>
+  </head>
+	<body>
+    <img class="fragment current-visible" src="assets/qtlogo-whitebg.png" style="position:absolute; left:10px; bottom:20px; width: 100px; opacity: 0.5">
+		<div class="reveal">
+			<div class="slides">
+				<section>
+          <h2>Cucumber Training - Session 1</h2>
+          <h4>GWT Feature Structure - Specification by Example</h4>
+        </section>
+
+        <section>
+          <section>
+            <h2>Test Cases</h2>
+            <br />
+          </section>
+          <section>
+            <h4>Consider a content restriction feature</h4>
+            <div>
+              Trailer content for unrated games on EPIC Games store is only displayed for 18 years and older users. User is prompted for age before the content is rendered.
+            </div>
+          </section>
+          <section>
+            <h4>Test cases</h4>
+            <style type='text/css'>
+              table, tr, td, th {
+                border: 1px solid;
+                font-size: 0.7em;
+                vertical-align: top;
+              }
+            </style>
+            <table>
+              <tr>
+                <th>#</th>
+                <th>title</th>
+                <th>prerequisites</th>
+                <th>steps &amp; data</th>
+                <th>expected results</th>
+              </tr>
+              <tr>
+                <td>ContentAccess-1.0.1</td>
+                <td>system prompts for User's age to access unrated games content</td>
+                <td>
+                  <ul>
+                    <li>'PUBG: Underground' is an unrated game on Epic Games store</li>
+                  </ul>
+                </td>
+                <td>
+                  <ol>
+                    <li>Launch Epic Games Store</li>
+                    <li>Search and open game content for 'PUBG: Underground'</li>
+                  </ol>
+                </td>
+                <td>
+                  A Prompt to enter User's Age is returned
+                </td>
+              </tr>
+              <tr>
+                <td>ContentAccess-1.0.2</td>
+                <td>18+ Users can access unrated games content</td>
+                <td>
+                  <ul>
+                    <li>User's is older than 18 years</li>
+                    <li>'PUBG: Underground' is an unrated game on Epic Games store</li>
+                  </ul>
+                </td>
+                <td>
+                  <ol>
+                    <li>Launch Epic Games Store</li>
+                    <li>Search and open game content for 'PUBG: Underground'</li>
+                    <li>Submit User's age and continue</li>
+                  </ol>
+                </td>
+                <td>
+                  Trailer and Detailed Content for Game 'PUBG: Underground' is returned
+                </td>
+              </tr>
+              <tr>
+                <td>ContentAccess-1.0.3</td>
+                <td>Non 18+ Users cannot access unrated games content</td>
+                <td>
+                  <ul>
+                    <li>User is not older than 17 years</li>
+                    <li>'PUBG: Underground' is an unrated game on Epic Games store</li>
+                  </ul>
+                </td>
+                <td>
+                  <ol>
+                    <li>Launch Epic Games Store</li>
+                    <li>Search and open game content for 'PUBG: Underground'</li>
+                    <li>Submit User's age and continue</li>
+                  </ol>
+                </td>
+                <td>
+                  An exception message is returned stating that User can not access Content as it is age retricted.
+                </td>
+              </tr>
+            </table>
+          </section>
+         <section data-auto-animate>
+             <table>
+              <tr>
+                <th>#</th>
+                <th>title</th>
+                <th>prerequisites</th>
+                <th>steps &amp; data</th>
+                <th>expected results</th>
+              </tr>
+              <tr>
+                <td>ContentAccess-1.0.1</td>
+                <td>system prompts for User's age to access unrated games content</td>
+                <td>
+                  <ul>
+                    <li>'PUBG: Underground' is an unrated game on Epic Games store</li>
+                  </ul>
+                </td>
+                <td>
+                  <ol>
+                    <li>Launch Epic Games Store</li>
+                    <li>Search and open game content for 'PUBG: Underground'</li>
+                  </ol>
+                </td>
+                <td>
+                  A Prompt to enter User's Age is returned
+                </td>
+              </tr>
+             </table>
+            </br>
+            <pre data-id="code-animation"><code class='gherkin'>
+Scenario: System prompts for age to access unrated games content
+            </code></pre>
+          </section>
+          <section data-auto-animate>
+             <table>
+              <tr>
+                <th>#</th>
+                <th>title</th>
+                <th>prerequisites</th>
+                <th>steps &amp; data</th>
+                <th>expected results</th>
+              </tr>
+              <tr>
+                <td>ContentAccess-1.0.1</td>
+                <td>system prompts for User's age to access unrated games content</td>
+                <td>
+                  <ul>
+                    <li>'PUBG: Underground' is an unrated game on Epic Games store</li>
+                  </ul>
+                </td>
+                <td>
+                  <ol>
+                    <li>Launch Epic Games Store</li>
+                    <li>Search and open game content for 'PUBG: Underground'</li>
+                  </ol>
+                </td>
+                <td>
+                  A Prompt to enter User's Age is returned
+                </td>
+              </tr>
+             </table>
+            </br>
+            <pre data-id="code-animation"><code class='gherkin'>
+Scenario: System prompts for age to access unrated games content
+  Given 'PUBG: Underground' is an unrated game on EPIC Games store
+            </code></pre>
+          </section>
+          <section data-auto-animate>
+             <table>
+              <tr>
+                <th>#</th>
+                <th>title</th>
+                <th>prerequisites</th>
+                <th>steps &amp; data</th>
+                <th>expected results</th>
+              </tr>
+              <tr>
+                <td>ContentAccess-1.0.1</td>
+                <td>system prompts for User's age to access unrated games content</td>
+                <td>
+                  <ul>
+                    <li>'PUBG: Underground' is an unrated game on Epic Games store</li>
+                  </ul>
+                </td>
+                <td>
+                  <ol>
+                    <li>Launch Epic Games Store</li>
+                    <li>Search and open game content for 'PUBG: Underground'</li>
+                  </ol>
+                </td>
+                <td>
+                  A Prompt to enter User's Age is returned
+                </td>
+              </tr>
+             </table>
+            </br>
+            <pre data-id="code-animation"><code class='gherkin'>
+Scenario: System prompts for age to access unrated games content
+  Given 'PUBG: Underground' is an unrated game on EPIC Games store
+  When I launch Epic Games Store
+            </code></pre>
+          </section>
+          <section data-auto-animate>
+             <table>
+              <tr>
+                <th>#</th>
+                <th>title</th>
+                <th>prerequisites</th>
+                <th>steps &amp; data</th>
+                <th>expected results</th>
+              </tr>
+              <tr>
+                <td>ContentAccess-1.0.1</td>
+                <td>system prompts for User's age to access unrated games content</td>
+                <td>
+                  <ul>
+                    <li>'PUBG: Underground' is an unrated game on Epic Games store</li>
+                  </ul>
+                </td>
+                <td>
+                  <ol>
+                    <li>Launch Epic Games Store</li>
+                    <li>Search and open game content for 'PUBG: Underground'</li>
+                  </ol>
+                </td>
+                <td>
+                  A Prompt to enter User's Age is returned
+                </td>
+              </tr>
+             </table>
+            </br>
+            <pre data-id="code-animation"><code class='gherkin'>
+Scenario: System prompts for age to access unrated games content
+  Given 'PUBG: Underground' is an unrated game on EPIC Games store
+  When I launch Epic Games Store
+  When I search and open 'PUBG: Underground' game
+            </code></pre>
+          </section>
+          <section data-auto-animate>
+             <table>
+              <tr>
+                <th>#</th>
+                <th>title</th>
+                <th>prerequisites</th>
+                <th>steps &amp; data</th>
+                <th>expected results</th>
+              </tr>
+              <tr>
+                <td>ContentAccess-1.0.1</td>
+                <td>system prompts for User's age to access unrated games content</td>
+                <td>
+                  <ul>
+                    <li>'PUBG: Underground' is an unrated game on Epic Games store</li>
+                  </ul>
+                </td>
+                <td>
+                  <ol>
+                    <li>Launch Epic Games Store</li>
+                    <li>Search and open game content for 'PUBG: Underground'</li>
+                  </ol>
+                </td>
+                <td>
+                  A Prompt to enter User's Age is returned
+                </td>
+              </tr>
+             </table>
+            </br>
+            <pre data-id="code-animation"><code class='gherkin'>
+Scenario: System prompts for age to access unrated games content
+  Given 'PUBG: Underground' is an unrated game on EPIC Games store
+  When I launch Epic Games Store
+  When I search and open 'PUBG: Underground' game
+  Then A prompt to enter age is displayed
+            </code></pre>
+          </section>
+          <section data-auto-animate>
+            <h4>Given-When-Then</h4>
+            <br />
+            <pre data-id="code-animation"><code class='gherkin'>
+Scenario: System prompts for age to access unrated games content
+  Given 'PUBG: Underground' is an unrated game on EPIC Games store
+  When I launch Epic Games Store
+  When I search and open 'PUBG: Underground' game
+  Then A prompt to enter age is displayed
+            </code></pre>
+          </section>
+          <section>
+            <style type='text/css'>
+              .description {
+                font-size: 0.8em;
+              }
+            </style>
+            <h4>Given-When-Then explained</h4>
+            <br />
+            <ul>
+              <li>
+                <div>Scenario - <span class='description'>title/description for the scenario example</span></div>
+              </li>
+              <li>
+                <div>Given - <span class='description'>conditions necessary for the system to attain test base state and to set a context</span></div>
+              </li>
+              <li>
+                <div>When - <span class='description'>actions performed and data entered that invokes system's response</div>
+              </li>
+              <li>
+                <div>Then - <span class='description'>behavior or system's response for performed actions</span></div>
+              </li>
+            </ul>
+            <br />
+            <pre><code class='gherkin'>Scenario: title/test objective/behavior description
+  Given some initial context (the givens),
+  When an event occurs,
+  Then ensure some outcomes.</code></pre>
+          </section>
+          <section>
+            <h4>Given-When-Then</h4>
+            <br />
+            <pre><code class='gherkin'>
+Scenario: System prompts for age to access unrated games content
+  Given 'PUBG: Underground' is an unrated game on EPIC Games store
+  When I launch Epic Games Store
+  When I search and open 'PUBG: Underground' game
+  Then A prompt to enter age is displayed
+
+Scenario: 18+ Users can access unrated games content
+  Given 'PUBG: Underground' is an unrated game on EPIC Games store
+  Given I am older than 18 years
+  When I launch Epic Games Store
+  When I search and open 'PUBG: Underground' game
+  When I enter my age in age prompt
+  Then 'PUBG: Underground' game's trailer is displayed
+
+Scenario: 17 year old Users cannot access unrated games content
+  Given 'PUBG: Underground' is an unrated game on EPIC Games store
+  Given I am younger than 18 years
+  When I launch Epic Games Store
+  When I search and open 'PUBG: Underground' game
+  When I enter my age in age prompt
+  Then exception message is displayed
+  Then exception message reads 
+  '''
+    Sorry, you are not old enough to access this content.
+  '''
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>What's in a Story</h2>
+          </section>
+          <section>
+            <h4>The sturcture of a story</h4>
+            <br />
+            <div style='text-align: left; font-size: 0.8em;'>
+              <strong>Title:</strong> one line describing the story
+              <br />
+              <br />
+              <strong>Narrative:</strong>
+              <br />
+              As a <em>[ROLE]</em>
+              <br />
+              I want <em>[FEATURE/FUNCTION]</em>
+              <br />
+              So that <em>[BENEFIT]</em>
+              <br />
+              <br />
+              <strong>Acceptance Criteria:</strong> 
+              <br />
+              <ul style='list-style-type: none;'>
+                <li>
+                  - <em>criteria 1</em>
+                </li>
+              </ul>
+            </div>
+          </section>
+          <section>
+            <h4>Story - ATM Transaction</h4>
+            <br />
+            <div style='text-align: left; font-size: 0.7em;'>
+              <strong>Story:</strong> Account holder withdraws cash from ATM
+              <br />
+              <br />
+              <strong>Narrative:</strong>
+              <em>
+              As an Account Holder
+              <br />
+              &nbsp;&nbsp; I want to withdraw cash from an ATM
+              <br />
+              &nbsp;&nbsp; So that I can get money when bank is closed
+              </em>
+              <br />
+              <br />
+              <strong>Acceptance Criteria:</strong> 
+              <br />
+              <ul style='list-style-type: none; font-size: 0.8em;'>
+                <li>
+                  - Account holder can withdraw cash when account has sufficient funds 
+                </li>
+                <li>
+                  - Account holder can not withdraw cash when account has insufficient funds 
+                </li>
+                <li>
+                  - Account holder can not withdraw cash when ATM card has expired
+                </li>
+              </ul>
+            </div>
+          </section>
+          <section>
+            <h4>Scenario</h4>
+            <br />
+            <pre><code class='gherkin'>
+Scenario: Account holder can withdraw cash when account has
+   sufficient funds
+  Given account balance is Rs.100
+  Given ATM card is valid
+  Given ATM machine has more than Rs.100 in cash
+  When Account Holder requests Rs.50
+  Then ATM machine dispeses Rs.50
+  Then ATM card is returned
+  Then new account balance is Rs.50
+            </code></pre>
+          </section>
+          <section>
+            <h4>Scenarios as Examples</h4>
+            <br />
+            <pre><code class='gherkin'>
+Example: Account holder can withdraw cash when account has
+   sufficient funds
+  Given account balance is Rs.100
+  Given ATM card is valid
+  Given ATM machine has more than Rs.100 in cash
+  When Account Holder requests Rs.50
+  Then ATM machine dispeses Rs.50
+  Then ATM card is returned
+  Then new account balance is Rs.50
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Specification by Example</h3>
+          </section>
+          <section>
+            <h4>Specification by Example</h4>
+            <pre><code class='gherkin'>Feature: Account Holder withdraws money from ATM
+
+  As an Account Holder
+  I want to withdraw cash from an ATM
+  So that I can get money when bank is closed
+
+  Example: Account holder can withdraw cash when account has
+     sufficient funds
+    Given account balance is Rs.100
+    Given ATM card is valid
+    Given ATM machine has more than Rs.100 in cash
+    When Account Holder requests Rs.50
+    Then ATM machine dispeses Rs.50
+    Then ATM card is returned
+    Then new account balance is Rs.50
+
+  Example: Account holder can not withdraw cash when account has
+     insufficient funds
+    Given account balance is Rs.10
+    Given ATM card is valid
+    Given ATM machine has more than Rs.100 in cash
+    When Account Holder requests Rs.50
+    Then ATM machine does not dispense money
+    Then ATM card is returned
+    Then ATM machine shows error message 'insufficient
+      account balance'
+    Then new account balance is Rs.10
+
+  Example: Account holder can not withdraw cash when ATM card has
+     expired
+    Given account balance is Rs.100
+    Given ATM card has expired
+    Given ATM machine has more than Rs.100 in cash
+    When Account Holder requests Rs.50
+    Then ATM machine does not dispense money
+    Then ATM card is returned
+    Then ATM machine shows error message 'ATM card expired'
+    Then new account balance is Rs.100
+            </code></pre>
+          </section>
+          <section>
+            <h4>Scenarios in Story should...</h4>
+            <br />
+            <ul>
+              <li>be examples that detail the acceptance criteria</li>
+              <li>expand feature behavior understanding into context (Given), actions (When) and outcomes (Then)</li>
+              <li>bridge feature understanding between all sdlc team members</li>
+              <li>be executeable</li>
+            </ul>
+            <br />
+            <br />
+            <span>hence .. Specification by Example</span>
+          </section>
+        </section>
+
+        <section>
+          <h3>Exercise</h3>
+          <div style='text-align: left;'> Create Examples/Scenarios in cucumber GWT format for following story narrative <br />
+            <pre style='font-size:0.4em;'><code class='gherkin'>Feature: Phone allows scanning QR Codes to launch bookmarked resources.
+  
+    As a Mobile Phone User
+    I can use QR Code Scan app
+    To be able to access bookmarked resources with ease</code></pre>
+          </div>
+          <br /><br />
+          <h4>Thank You</h4>
+        </section>
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>

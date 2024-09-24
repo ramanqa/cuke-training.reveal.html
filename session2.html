@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Cucumber - Session 2</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/dracula.css">
+
+		<link rel="stylesheet" href="plugin/highlight/styles/hybrid.css">
+    <style>
+.reveal code {
+  color: silver;
+}
+    </style>
+  </head>
+	<body>
+    <img class="fragment current-visible" src="assets/qtlogo-whitebg.png" style="position:absolute; left:10px; bottom:20px; width: 100px; opacity: 0.5">
+		<div class="reveal">
+			<div class="slides">
+				<section>
+          <h2>Cucumber Training - Session 2</h2>
+          <h4>Example, Examples and Example Data - Gherkin Grammer</h4>
+        </section>
+
+        <section>
+          <section>
+            <h2>Gherkin</h2>
+            <br />
+          </section>
+          <section>
+            <h4>Gherkin Syntax</h4>
+            <ul>
+              <li>
+                Keywords
+                <ul style='font-size: 0.6em;'>
+                  <li>
+                    Feature, Rule
+                  </li>
+                  <li>
+                    Scenario, Example, Scenario Outline, Scenario Template
+                  </li>
+                  <li>
+                    Given, When, Then, And, But, *
+                  </li>
+                  <li>Background</li>
+                  <li>
+                    Examples, Scenarios
+                  </li>
+                </ul>
+              </li>
+            <br />
+              <li>
+                Special Symbols
+                <ul style='font-size: 0.6em;'>
+                  <li>""", '''</li>
+                  <li>|</li>
+                  <li>@</li>
+                  <li>#</li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Successive Given, When &amp; Then</h3>
+          </section>
+          <section data-auto-animate>
+            <h3>Successive Given, When &amp; Then</h3>
+            <pre data-id="code-animation"><code class='gherkin'>
+Example: Account holder can withdraw cash when account has
+   sufficient funds
+  Given account balance is Rs.100
+  Given ATM card is valid
+  Given ATM machine has more than Rs.100 in cash
+  When Account Holder requests Rs.50
+  Then ATM machine dispeses Rs.50
+  Then ATM card is returned
+  Then new account balance is Rs.50
+            </code></pre>
+          </section>
+          <section data-auto-animate>
+            <h3>Successive Given, When &amp; Then</h3>
+            <pre data-id="code-animation"><code class='gherkin'>
+Example: Account holder can withdraw cash when account has
+   sufficient funds
+  Given account balance is Rs.100
+  And ATM card is valid
+  And ATM machine has more than Rs.100 in cash
+  When Account Holder requests Rs.50
+  Then ATM machine dispeses Rs.50
+  And ATM card is returned
+  And new account balance is Rs.50
+            </code></pre>
+            <h6 style='font-family: sans-serif;'>Substitue successive Given, When &amp; Then with And</h6>
+          </section>
+          <section data-auto-animate>
+            <h3>Successive Given, When &amp; Then</h3>
+            <pre data-id="code-animation"><code class='gherkin'>
+Example: Account holder can not withdraw cash when account has
+     insufficient funds
+  Given account balance is Rs.10
+  Given ATM card is valid
+  Given ATM machine has more than Rs.100 in cash
+  When Account Holder requests Rs.50
+  Then ATM card is returned
+  Then ATM machine does not dispense money
+  Then ATM machine shows error message 'insufficient
+    account balance'
+  Then new account balance is Rs.10
+            </code></pre>
+          </section>
+          <section data-auto-animate>
+            <h3>Successive Given, When &amp; Then</h3>
+            <pre data-id="code-animation"><code class='gherkin'>
+Example: Account holder can not withdraw cash when account has
+     insufficient funds
+  Given account balance is Rs.10
+  And ATM card is valid
+  And ATM machine has more than Rs.100 in cash
+  When Account Holder requests Rs.50
+  Then ATM card is returned
+  But ATM machine does not dispense money
+  And ATM machine shows error message 'insufficient
+    account balance'
+  And new account balance is Rs.10
+            </code></pre>
+            <h6 style='font-family: sans-serif;'>Substitue successive Given, When &amp; Then with But &amp; And</h6>
+          </section>
+          <section data-auto-animate>
+            <h3>Successive Given, When &amp; Then</h3>
+            <pre data-id="code-animation"><code class='gherkin'>
+Example: aircraft seating configuration
+  Given an aircraft with 100 seats in 2-2 seating configuration
+  Given 30 passengers are female
+  Given 70 passengers are male
+  When passengers are boarded on aircraft
+  Then all female passanger are sitting next to female passenger
+            </code></pre>
+          </section>
+          <section data-auto-animate>
+            <h3>Successive Given, When &amp; Then</h3>
+            <pre data-id="code-animation"><code class='gherkin'>
+Example: aircraft seating configuration
+  Given an aircraft with 100 seats in 2-2 seating configuration
+  * 30 passengers are female
+  * 70 passengers are male
+  When passengers are boarded on aircraft
+  Then all female passanger are sitting next to female passenger
+            </code></pre>
+            <h6 style='font-family: sans-serif;'>Substitue successive Given, When &amp; Then with * (asterisk) </h6>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Data driven Examples</h3>
+          </section>
+          <section data-auto-animate>
+            <h3>Data driven Examples</h3>
+            <pre data-id="code-animation"><code class='gherkin'>
+Scenario: Account holder can withdraw cash from ATM
+  Given account balance is Rs.100
+  When Account Holder withdraws Rs.50 from ATM
+  Then new account balance is Rs.50
+            </code></pre>
+          </section>
+          <section data-auto-animate>
+            <h3>Data driven Examples</h3>
+            <pre data-id="code-animation"><code class='gherkin'>
+Scenario: Account holder can withdraw cash from ATM
+  Given account balance is Rs.100
+  When Account Holder withdraws Rs.50 from ATM
+  Then new account balance is Rs.50
+
+Scenario: Account holder can withdraw cash from ATM
+  Given account balance is Rs.50
+  When Account Holder withdraws Rs.50 from ATM
+  Then new account balance is Rs.0
+            </code></pre>
+          </section>
+          <section data-auto-animate>
+            <h3>Data driven Examples</h3>
+            <pre data-id="code-animation"><code class='gherkin'>
+Scenario Outline: Account holder can withdraw cash from ATM
+  Given account balance is Rs.&lt;opening_balance&gt;
+  When Account Holder withdraws Rs.&lt;cash_withdrawn&gt; from ATM
+  Then new account balance is Rs.&lt;closing_balance&gt;
+
+  Examples:
+    | opening_balance | cash_withdrawn | closing_balance |
+    | 100             | 50             | 50              |
+    | 50              | 50             | 0               |
+    | 2000            | 1000           | 1000            |
+            </code></pre>
+            <h6 style='font-family: sans-serif; font-size: 0.6em'>Scenario Outline/Scenario Template &amp; Examples/Scenarios with Data Table</h6>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Arguments and Data within Steps</h3>
+          </section>
+          <section>
+            <h3>Multiline Data Argument in Steps</h3>
+            <pre><code class='gherkin'>Scenario: Create a new user using 'user' REST API
+  Given request JSON body
+    ```
+      {
+        "email":"new.user.email@domain.com",
+        "firstname": "FirstName",
+        "lastname": "LastName",
+        "password": "PASSword@123",
+      }
+    ```
+  And request path is '/api/v1/user'
+  When http POST method is called
+  Then http response is recieved
+  And status code is 200
+            </code></pre>
+          </section>
+          <section>
+            <h3>Data Table in Steps</h3>
+            <pre><code class='gherkin'>
+Scenario: Batch create user accounts
+  Given unregistered users with details:
+    | email            | firstname  | lastname | password     |
+    | user1@domain.com | FirstName1 | LastName | PASSword@123 |
+    | user2@domain.com | FirstName2 | LastName | PASSword@123 |
+  When batch create user method is called with user data
+  Then command returns with success exit code
+  And users exists in user database with details:
+    | email            |
+    | user1@domain.com |
+    | user2@domain.com |
+            </code></pre>
+          </section>
+        </section>
+        
+        <section>
+          <section>
+            <h3>Examples with common base state</h3>
+          </section>
+          <section data-auto-animate>
+            <h3>Examples with common base state</h3>
+            <pre style='font-size: 0.5em;' data-id='code-animation'><code class='gherkin'>Scenario: System prompts for age to access unrated games content
+  Given 'PUBG: Underground' is an unrated game on EPIC Games store
+  When I search and open 'PUBG: Underground' game
+  Then A prompt to enter age is displayed
+
+Scenario: 18+ Users can access unrated games content
+  Given 'PUBG: Underground' is an unrated game on EPIC Games store
+  Given I am older than 18 years
+  When I search and open 'PUBG: Underground' game
+  When I enter my age in age prompt
+  Then 'PUBG: Underground' game's trailer is displayed
+
+Scenario: 17 year old Users cannot access unrated games content
+  Given 'PUBG: Underground' is an unrated game on EPIC Games store
+  Given I am younger than 18 years
+  When I search and open 'PUBG: Underground' game
+  When I enter my age in age prompt
+  Then exception message is displayed
+            </code></pre>
+          </section>
+          <section data-auto-animate>
+            <h3>Examples with common base state</h3>
+            <pre style='font-size: 0.5em;' data-id='code-animation'><code class='gherkin'>Background:
+  Given 'PUBG: Underground' is an unrated game on EPIC Games store
+
+Scenario: System prompts for age to access unrated games content
+  When I search and open 'PUBG: Underground' game
+  Then A prompt to enter age is displayed
+
+Scenario: 18+ Users can access unrated games content
+  Given I am older than 18 years
+  When I search and open 'PUBG: Underground' game
+  When I enter my age in age prompt
+  Then 'PUBG: Underground' game's trailer is displayed
+
+Scenario: 17 year old Users cannot access unrated games content
+  Given I am younger than 18 years
+  When I search and open 'PUBG: Underground' game
+  When I enter my age in age prompt
+  Then exception message is displayed
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <h3>Exercise</h3>
+          <div style='text-align: left;'> Create Scenarios in Cucumber to Test OMDB APIs <br />
+
+            <a href='https://www.omdbapi.com/'>https://www.omdbapi.com/</a>
+          </div>
+          <br />
+          <br />
+          <h4>Thank You</h4>
+        </section>
+
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			Reveal.initialize({
+				hash: true,
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
